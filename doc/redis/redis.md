@@ -1,6 +1,6 @@
 ## 什么是 Redis
 
-  ##### Redis是一个开源，基于内存的高性能key-Value数据库，它支持存储的value类型很丰富，包括string(字符串)、list(链表)、set(集合)、zset(sortedset--有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。Redis对关系型数据库起到很重要的补充作用，并提供丰富的API供不同编程语言调用
+##### Redis是一个开源，基于内存的高性能key-Value数据库，它支持存储的value类型很丰富，包括string(字符串)、list(链表)、set(集合)、zset(sortedset--有序集合)和hash（哈希类型）。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。Redis对关系型数据库起到很重要的补充作用，并提供丰富的API供不同编程语言调用
 
 ## 在 DaoCloud 服务集成创建 Redis 服务。
 
