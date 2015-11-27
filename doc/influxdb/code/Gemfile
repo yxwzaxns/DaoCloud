@@ -1,0 +1,5 @@
+source 'https://ruby.taobao.org'
+
+gem 'influxdb'
+
+gem 'sinatra'
