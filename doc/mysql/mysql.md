@@ -54,9 +54,13 @@
           end
 
           get '/' do
-            # score = storage.score()
-            # "Hello world, %d!" % score
-            "hello"
+            body "welcome,this is a info about MySQL:
+            host:#{ENV['MYSQL_PORT_3306_TCP_ADDR']}
+            username:#{ENV['MYSQL_USERNAME']}
+            password:#{ENV['MYSQL_PASSWORD']}
+            port:#{ENV['MYSQL_PORT_3306_TCP_PORT']}
+            database:#{ENV['MYSQL_INSTANCE_NAME']}"
+
           end
 
           get '/get/:score' do
