@@ -30,12 +30,12 @@
 
 ## MongoDB 与我的应用绑定
 
-  1. 选择需要绑定 MongoDB 服务的应用，在「应用配置」下的「服务绑定」里选择刚刚创建好的 MongoDB 服务。
+  1. 选择需要绑定 MongoDB 服务的应用，在「应用配置」下的「服务绑定」里选择刚刚创建好的 MongoDB 服务。(您可以在创建应用时绑定 MongoDB 服务，也可以把 MongoDB 服务绑定在现有的应用上)。
 
   ![](./images/image_7.png)
 
 
-  2. 当您选择了要绑定的 MongoDB 服务以后，会发现下面出现了关于连接 MongoDB 所需要的信息，在您选择保存更改以后，这些信息会写入到您绑定应用的环境变量里，这样您就可以在代码里通过读取相关环境变量来使用 MongoDB 服务。(您可以在创建应用时绑定 MongoDB 服务，也可以把 MongoDB 服务绑定在现有的应用上)。
+  2. 当您选择了要绑定的 MongoDB 服务以后，会发现下面出现了关于连接 MongoDB 所需要的信息，在您选择保存更改以后，这些信息会写入到您绑定应用的环境变量里，这样您就可以在代码里通过读取相关环境变量来使用 MongoDB 服务。
 
   ![](./images/image_8.png)
 
@@ -54,9 +54,9 @@
 
           host = ENV['MONGODB_PORT_27017_TCP_ADDR'] || 'localhost'
           port = ENV['MONGODB_PORT_27017_TCP_PORT'] || 27017
-          database = ENV['MONGODB_INSTANCE_NAME'] || 'demo'
-          username = ENV['MONGODB_USERNAME'] || 'aong'
-          password = ENV['MONGODB_PASSWORD'] || '1234'
+          database = ENV['MONGODB_INSTANCE_NAME'] || 'test'
+          username = ENV['MONGODB_USERNAME']
+          password = ENV['MONGODB_PASSWORD']
 
           hostport=host+':'+port.to_s
 
@@ -106,3 +106,5 @@
   + 绑定要使用的 MongoDB 服务，点击「立即部署」，应用启动成功后就可以进入 Mongo Express 执行常规的 MongoDB 服务管理操作了。（注意：目前在 DaoCloud 镜像仓库提供的 Mongo Express 版本不支持授权认证，您启动 Mongo Express 容器后，容器的 URL 是公开访问的。所以在您使用完毕后请立即「停止」容器，防止 MongoDB 数据库被他人操作。）
 
   ![](./images/image_11.png)
+
+  #### 至此，我们已经掌握了如何创建和使用 DaoCloud 平台之上的 MongoDB 服务。
