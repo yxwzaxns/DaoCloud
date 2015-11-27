@@ -96,7 +96,7 @@
 
         成功部署后访问应用，便可以看到连接 MySQL 所需要的相关信息已经被成功读取出来。
 
-        ![](./images/image_1.png)
+        ![](./images/image_9.png)
 
 ## 管理 MySQL 服务
   1. 现在关于 MySQL 服务的管理工具有很多，DaoCloud 本身在 MySQL 服务里就集成了著名的 PhpMyAdmin 管理工具。
@@ -107,16 +107,23 @@
 
     + 在 MySQL 服务控制台，点击「管理 MySQL」按钮就可以进入 PhpMyAdmin 管理界面。在这里您就可以执行常规的 MySQL 服务管理操作了。
 
-      ![](./images/image_1.png)
+      ![](./images/image_10.png)
 
-      ![](./images/image_1.png)
+      ![](./images/image_11.png)
 
   2. 您也可以用 DaoCloud 官方提供的 PhpMyAdmin 镜像来创建自己的 MySQL 管理工具。
 
     + 进入 DaoCloud 镜像仓库，选择 「DaoCloud镜像」下的 PhpMyAdmin 镜像，点击「部署最新版本」。
 
-      ![](./images/image_1.png)
+      ![](./images/image_12.png)
+      ![](./images/image_13.png)
 
-    + 绑定要使用的 MySQL 服务，点击「立即部署」，应用启动成功后就可以进入 PhpMyAdmin 执行常规的 MySQL 服务管理操作了。
+    + 输入应用名称，选择运行环境，点击「基础设置」，进入下一步。
 
-      ![](./images/image_1.png)
+    + 选择绑定要使用的 MySQL 服务，点击「立即部署」，应用启动成功后点击应用 url，输入用户名和密码就可以进入 PhpMyAdmin 执行常规的 MySQL 服务管理操作了。
+
+      ![](./images/image_14.png)
+
+      ![](./images/image_15.png)
+
+  #### 至此，我们已经掌握了如何创建和使用 DaoCloud 平台之上的 MySQL 服务。

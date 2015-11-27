@@ -16,7 +16,7 @@
 
   ![](./images/image_3.png)
 
-  4. 输入服务实例名称，点击「创建」按钮
+  4. 输入服务实例名称，选择合适的配置（注意：在配置里 DaoCloud 提供了【基础服务】和【生产环境】两种类型的配置，您可以根据您的需求选择相应的配置类型），点击「创建」按钮
 
   ![](./images/image_4.png)
 
@@ -89,15 +89,20 @@
             body "#{s}"
           end
 
-    成功部署后访问应用，便可以看到连接 MongoDB 所需要的相关信息已经被成功读取出来
+    成功部署后访问应用，便可以看到连接 MongoDB 所需要的相关信息已经被成功读取出来,并且您可以参考上面的代码往 MongoDB 里写入数据，例如：
+    http://your_app_url_path/get/name
+
+    ![](./images/image_9.png)
 
 ## 管理 MongoDB 服务
  1. Mongo Express 是使用 Node.js 和 Express 框架实现的轻量级 MongoDB 数据库管理程序，通过它您可以轻松管理您的 MongoDB 数据库。
- 这里我们使用 DaoCloud 提供的　Mongo Express 镜像来创建一个 Mongo　Express　应用，用它来管理我们的　MongoDB 服务。
+ 这里我们使用 DaoCloud 提供的 Mongo Express 镜像来创建一个 Mongo Express 应用，用它来管理我们的 MongoDB 服务。
   + 进入 DaoCloud 镜像仓库，选择 「DaoCloud镜像」下的 Mongo Express 镜像，点击「部署最新版本」。
 
-  ![](./images/image_1.png)
+  ![](./images/image_10.png)
+
+  + 输入应用名称，选择运行环境，点击「基础设置」，进入下一步。
 
   + 绑定要使用的 MongoDB 服务，点击「立即部署」，应用启动成功后就可以进入 Mongo Express 执行常规的 MongoDB 服务管理操作了。（注意：目前在 DaoCloud 镜像仓库提供的 Mongo Express 版本不支持授权认证，您启动 Mongo Express 容器后，容器的 URL 是公开访问的。所以在您使用完毕后请立即「停止」容器，防止 MongoDB 数据库被他人操作。）
 
-  ![](./images/image_1.png)
+  ![](./images/image_11.png)
