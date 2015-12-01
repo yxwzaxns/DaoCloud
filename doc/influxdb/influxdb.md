@@ -29,7 +29,9 @@
 
 ## InfluxDB 与我的应用绑定
 
-1. 选择需要绑定 InfluxDB 服务的应用，在「应用配置」下的「服务绑定」里选择刚刚创建好的 InfluxDB 服务。(您可以在创建应用时绑定 InfluxDB 服务，也可以把 InfluxDB 服务绑定在现有的应用上)。
+1. 选择需要绑定 InfluxDB 服务的应用，在「应用配置」下的「服务绑定」里选择刚刚创建好的 InfluxDB 服务。
+
+  > 您可以在创建应用时绑定 InfluxDB 服务，也可以把 InfluxDB 服务绑定在现有的应用上
 
   ![](./images/image_7.png)
 
@@ -39,55 +41,51 @@
 
 2. 如何读取环境变量和使用 InfluxDB，下面我们展示一段使用 Ruby 语言来操作 InfluxDB 的具体代码（完整的 Docker 镜像请前往 [GitHub](https://github.com/yxwzaxns/DaoCloud_InfluxDB.git) ，您可以 fork 到自己的项目里运行这个例子）
 
-          require 'sinatra'
-          require 'mongo'
+```Ruby
+require 'sinatra'
+require 'net/http'
+require 'erb'
+require 'json'
 
-          module Sinatra
-            class Base
-              set :server, %w[thin mongrel webrick]
-              set :bind, '0.0.0.0'
-              set :port, 8080
-            end
-          end
+module Sinatra
+  class Base
+    set :server, %w[thin mongrel webrick]
+    set :bind, '0.0.0.0'
+    set :port, 8080
+    set :views, File.dirname('.') + '/views'
+  end
+end
 
-          host = ENV['InfluxDB_PORT_27017_TCP_ADDR'] || 'localhost'
-          port = ENV['InfluxDB_PORT_27017_TCP_PORT'] || 27017
-          database = ENV['InfluxDB_INSTANCE_NAME'] || 'test'
-          username = ENV['InfluxDB_USERNAME']
-          password = ENV['InfluxDB_PASSWORD']
+host={ENV['INFLUXDB_PORT_3306_TCP_ADDR']}
+username:#{ENV['INFLUXDB_USERNAME']}
+password:#{ENV['INFLUXDB_PASSWORD']}
+port:#{ENV['INFLUXDB_PORT_3306_TCP_PORT']}
+database:#{ENV['INFLUXDB_INSTANCE_NAME']}
 
-          hostport=host+':'+port.to_s
+$create_database_uri="http://#{host}:#{port}/query?u=#{username}&p=#{password}&q=create database #{database}"
+$query_uri="http://#{host}:#{port}/query?u=#{username}&p=#{password}&db=#{database}&q=select * from sin"
+$write_uri="http://#{host}:#{port}/write?u=#{username}&p=#{password}&db=#{database}"
 
-          $db = Mongo::Client.new([hostport],
-                                  :database => database,
-                                  :user => username,
-                                  :password => password)
+get '/' do
+  n=0
+  Net::HTTP.get(URI($create_database_uri))
+  Array(1..90).each do |e|
+      Net::HTTP.start(URI($write_uri).host,URI($write_uri).port) do |http|
+        http.request_post($write_uri,"sin,val=#{e} value=#{Math.sin(Math::PI/180*e)}")
+        n+=1
+      end
+  end
+  erb :index,:locals => {:n => n}
+end
 
-          get '/' do
-            body "welcome,this is a info about InfluxDB:
-            host:#{ENV['InfluxDB_PORT_27017_TCP_ADDR']}
-            username:#{ENV['InfluxDB_USERNAME']}
-            password:#{ENV['InfluxDB_PASSWORD']}
-            port:#{ENV['InfluxDB_PORT_27017_TCP_PORT']}
-            database:#{ENV['InfluxDB_INSTANCE_NAME']}"
+get '/info' do
+  res=JSON.parse(Net::HTTP.get(URI($query_uri)))
+  erb :info,:locals => {:info => res}
+end
 
-          end
+```
 
-          get '/get/:name' do
-            res = $db[:artists].insert_one({ name: params['name'] })
-            redirect to('/get')
-          end
-
-          get '/get' do
-            result = $db[:artists].find()
-            s=[]
-            result.each do |a|
-              s.push a['name']
-            end
-            body "#{s}"
-          end
-
-    成功部署后访问应用，便可以看到连接 InfluxDB 所需要的相关信息已经被成功读取出来,并且您可以参考上面的代码往 InfluxDB 里写入数据，例如：
+  成功部署后访问应用，便可以看到连接 InfluxDB 所需要的相关信息已经被成功读取出来,并且您可以参考上面的代码往 InfluxDB 里写入数据，例如：
     http://your_app_url_path/get/name
 
     ![](./images/image_9.png)

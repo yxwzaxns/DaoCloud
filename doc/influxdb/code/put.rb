@@ -12,22 +12,22 @@ module Sinatra
   end
 end
 
-# body "welcome,this is a info about MySQL:
-# host:#{ENV['MYSQL_PORT_3306_TCP_ADDR']}
-# username:#{ENV['MYSQL_USERNAME']}
-# password:#{ENV['MYSQL_PASSWORD']}
-# port:#{ENV['MYSQL_PORT_3306_TCP_PORT']}
-# database:#{ENV['MYSQL_INSTANCE_NAME']}"
-# uri=URI('http://localhost:8086/query?u=aong&p=1234&q=create database db')
+
+# host=ENV['MYSQL_PORT_3306_TCP_ADDR']
+# username=ENV['MYSQL_USERNAME']
+# password=ENV['MYSQL_PASSWORD']
+# port=ENV['MYSQL_PORT_3306_TCP_PORT']
+# database=ENV['MYSQL_INSTANCE_NAME']
+
 host="localhost"
 username="aong"
 password="1234"
 port="8086"
 database="db1"
 
-$create_database_uri="http://#{host}:#{port}/query?u=#{username}&p=#{password}&q=create database #{database}"
-$query_uri="http://#{host}:#{port}/query?u=#{username}&p=#{password}&db=#{database}&q=select * from sin"
-$write_uri="http://#{host}:#{port}/write?u=#{username}&p=#{password}&db=#{database}"
+$create_database_uri="http://#{host}=port}/query?u=#{username}&p=#{password}&q=create database #{database}"
+$query_uri="http://#{host}=port}/query?u=#{username}&p=#{password}&db=#{database}&q=select * from sin"
+$write_uri="http://#{host}=port}/write?u=#{username}&p=#{password}&db=#{database}"
 
 get '/' do
   n=0

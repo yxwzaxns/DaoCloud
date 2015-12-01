@@ -11,41 +11,49 @@
 
 1. 登录 DaoCloud 控制台，选择「服务集成」。
 
-  ![](./images/image_1.png)
+  ![](image_1.png)
 
 2. 在「Dao服务」里选择 Volume 服务。
 
-  ![](./images/image_2.png)
+  ![](image_2.png)
 
 3. 点击 「创建 Volume」。
 
-  ![](./images/image_3.png)
+  ![](image_3.png)
 
-4. 输入服务实例名称，为 Volume  选择合适的容量（每 10G 容量需要消耗 1x 的资源配额），点击「开始创建」按钮创建 Volume 服务实例
+4. 输入服务实例名称，为 Volume  选择合适的容量，点击「开始创建」按钮创建 Volume 服务实例
 
-  ![](./images/image_4.png)
+  > 每 10G 容量需要消耗 1x 的资源配额
+
+  ![](image_4.png)
 
 5. 创建完成，可以看到 Volume 服务的相关信息，比如 volume 已使用存储容量。
 
-  ![](./images/image_5.png)
+  ![](image_5.png)
 
 6. 在「我的服务」里查看已创建的 Volume 服务
 
-  ![](./images/image_6.png)
-
-7. 通过点击「管理 Volume」进入 Volume 的管理页面。在这里，您可以像操作本地文件夹一样操作 Volume 里的内容。
-
   ![](image_6.png)
+
+7. 在 Volume 服务页面，点击「管理 Volume」进入 Volume 的管理页面。
+
+  ![](image_7.png)
+
+  进入 Volume 管理界面，在这里，您可以像操作本地文件夹一样操作 Volume 里的内容。
+
+  ![](image_8.png)
 
 ## Volume 与我的应用绑定
 
-1. 选择需要绑定 Volume 服务的应用，在「应用配置」下的「Volume」里选择刚刚创建好的 Volume。(您可以在创建应用时绑定 Volume，也可以把 Volume 绑定在现有的应用上)。
+1. 选择需要绑定 Volume 服务的应用，在「应用配置」下的「Volume」里选择刚刚创建好的 Volume。
 
-  ![](./images/image_7.png)
+  > 您可以在创建应用时绑定 Volume，也可以把 Volume 绑定在现有的应用上。
+
+  ![](image_9.png)
 
 2. 当您选择了要绑定的 Volume 服务以后，会弹出一个输入框，要求输入 Volume 挂载到容器的路径，然后保存更改即可。
 
-  ![](./images/image_8.png)
+  ![](image_10.png)
 
 ## 如何使用 Volume
 如何使用 Volume 来持久化容器数据？这里我们用一个简单的例子来进行演示。同样，您可以通过我们在 [GitHub]() 上提供的代码来进行下面的演示，主要代码如下，它的功能是在我们访问应用时把 Volume 里的文件内容读取出来，并把访问记录在 Volume 下的 ip.log 日志里：
@@ -96,15 +104,19 @@ end
 ```
 
 具体步骤：
-1.  构建代码，创建应用，并在应用上绑定 Volume 到 /var/vo，因为此时我们绑定的 Volume 里还没有内容，所以访问应用结果如下图显示：
+1.  从 [GitHub]() 上拉取代码在 DaoCloud 里构建镜像，创建应用，并在应用上绑定 Volume 到 /var/vo，因为此时我们绑定的 Volume 里还没有内容，所以访问应用结果如下图显示：
 
-  ![](image_3.png)
+  ![](image_11.png)
 
-2. 现在来到 Volume 控制台，在里面创建一个文件并写入一些内容，保存后重新访问我们的应用，结果如下：
+2. 现在来到 Volume 管理界面，在里面创建一个文件并写入一些内容，保存后重新访问我们的应用。
 
-  ![](image_2.png)
+  ![](image_12.png)
 
-  很明显，应用成功读取到了我们建立的文件，我们回到 Volume 的控制台，发现在当前目录下的确产生了一个 ip.log 的日志文件。这说明
+  访问结果如下
+
+  ![](image_13.png)
+
+  很明显，应用成功读取到了我们建立的文件，我们回到 Volume 的管理界面，刷新一下浏览器，发现在当前目录下的确产生了一个 ip.log 的日志文件。这说明
 
   + 我们可以通过 Volume 来修改我们的应用，而不必每一次修改后都要重新构建代码，更新应用了。
   + 我们可以把应用产生的日志或者数据放到 Volume 下，方便我们查看
