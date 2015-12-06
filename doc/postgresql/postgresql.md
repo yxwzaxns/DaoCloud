@@ -107,36 +107,17 @@
 
   ```
 
-  成功部署后访问应用，便可以看到连接 PostgreSQL 所需要的相关信息已经被成功读取出来。
+  成功部署后访问应用，便可以看到应用成功连接 PostgreSQL 并进行了相关的操作。
 
   ![](./images/image_9.png)
 
 ## 管理 PostgreSQL 服务
-  1. 现在关于 PostgreSQL 服务的管理工具有很多，DaoCloud 本身在 PostgreSQL 服务里就集成了著名的 phpMyAdmin 管理工具。
+在 GitHub 上有许多 PostgreSQL 服务管理工具，比如 [phpPgAdmin](https://github.com/erikdubbelboer/phpPostgreAdmin.git)，这里我们把 phpPgAdmin 构建成 Docker 镜像来管理我们的 PostgreSQL 服务。
 
-    + 点击「服务集成」->「我的服务」选择对应的 PostgreSQL 服务。
+> GitHub 地址：[https://github.com/yxwzaxns/DaoCloud_phpPostgreAdmin.git](https://github.com/yxwzaxns/DaoCloud_phpPostgreAdmin.git)
 
-      ![](./images/image_1.png)
+ fork 上面的代码在 DaoCloud 构建镜像并创建 phpPgAdmin 应用，注意绑定要管理的的 PostgreSQL 服务，应用启动成功后就可以进行常规的 PostgreSQL 服务管理操作
 
-    + 在 PostgreSQL 服务控制台，点击「管理 PostgreSQL」按钮就可以进入 phpMyAdmin 管理界面。在这里您就可以执行常规的 PostgreSQL 服务管理操作了。
+ ![](./images/image_9.png)
 
-      ![](./images/image_10.png)
-
-      ![](./images/image_11.png)
-
-  2. 您也可以用 DaoCloud 官方提供的 phpMyAdmin 镜像来创建自己的 PostgreSQL 管理工具。
-
-    + 进入 DaoCloud 镜像仓库，选择 「DaoCloud镜像」下的 phpMyAdmin 镜像，点击「部署最新版本」。
-
-      ![](./images/image_12.png)
-      ![](./images/image_13.png)
-
-    + 输入应用名称，选择运行环境，点击「基础设置」，进入下一步。
-
-    + 选择绑定要使用的 PostgreSQL 服务，点击「立即部署」，应用启动成功后点击应用 URL，输入用户名和密码就可以进入 phpMyAdmin 执行常规的 PostgreSQL 服务管理操作了。
-
-      ![](./images/image_14.png)
-
-      ![](./images/image_15.png)
-
-  #### 至此，我们已经掌握了如何创建和使用 DaoCloud 平台之上的 PostgreSQL 服务。
+#### 至此，我们已经掌握了如何创建和使用 DaoCloud 平台之上的 PostgreSQL 服务。
