@@ -109,7 +109,6 @@
 
   成功部署后访问应用，便可以看到应用成功连接 PostgreSQL 并进行了相关的操作。
 
-  ![](./images/image_9.png)
 
 ## 管理 PostgreSQL 服务
 在 GitHub 上有许多 PostgreSQL 服务管理工具，比如 [phpPgAdmin](https://github.com/erikdubbelboer/phpPostgreAdmin.git)，这里我们把 phpPgAdmin 构建成 Docker 镜像来管理我们的 PostgreSQL 服务。
