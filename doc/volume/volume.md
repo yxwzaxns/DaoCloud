@@ -27,7 +27,7 @@
 
   ![](image_4.png)
 
-5. 创建完成，可以看到 Volume 服务的相关信息，比如 volume 已使用存储容量。
+5. 创建完成，可以看到 Volume 服务的相关信息，比如 Volume 已使用存储容量。
 
   ![](image_5.png)
 
@@ -56,7 +56,7 @@
   ![](image_10.png)
 
 ## 如何使用 Volume
-如何使用 Volume 来持久化容器数据？这里我们用一个简单的例子来进行演示。同样，您可以通过我们在 [GitHub]() 上提供的代码来进行下面的演示，主要代码如下，它的功能是在我们访问应用时把 Volume 里的文件内容读取出来，并把访问记录在 Volume 下的 ip.log 日志里：
+如何使用 Volume 来持久化容器数据？这里我们用一个简单的例子来进行演示。同样，您可以通过我们在 [GitHub](https://github.com/yxwzaxns/DaoCloud_volume.git) 上提供的代码来进行下面的演示，主要代码如下，它的功能是在我们访问应用时把 Volume 里的文件内容读取出来，并把访问记录在 Volume 下的 ip.log 日志里：
 
 ```ruby
 require 'sinatra'
@@ -104,7 +104,7 @@ end
 ```
 
 具体步骤：
-1.  从 [GitHub]() 上拉取代码在 DaoCloud 里构建镜像，创建应用，并在应用上绑定 Volume 到 /var/vo，因为此时我们绑定的 Volume 里还没有内容，所以访问应用结果如下图显示：
+1.  从 [GitHub](https://github.com/yxwzaxns/DaoCloud_volume.git) 上拉取代码在 DaoCloud 里构建镜像，创建应用，并在应用上绑定 Volume 到 /var/vo，因为此时我们绑定的 Volume 里还没有内容，所以访问应用结果如下图显示：
 
   ![](image_11.png)
 
