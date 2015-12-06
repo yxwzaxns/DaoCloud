@@ -41,24 +41,13 @@
   ![](image_10.png)
 
 ## 如何使用 New Relic
-在 DaoCloud 上使用 New Relic 之前，您需要在 New Relic 注册您的个人账号，然后选择 RPM 服务，接着选择您要监控的项目所使用的语言或框架
+我们将在用一个例子来演示在 DaoCloud 上怎么使用 New Relc 服务，具体步骤如下：
 
-具体步骤：
-1.  从 [GitHub](https://github.com/yxwzaxns/DaoCloud_New Relic.git) 上拉取代码在 DaoCloud 里构建镜像，创建应用，并在应用上绑定 New Relic 到 /var/vo，因为此时我们绑定的 New Relic 里还没有内容，所以访问应用结果如下图显示：
+1. 在 [New Relic]() 官网注册您的 New Relic 账号。
+2. 登录 New Relic,选择 RPM 服务。
 
-  ![](image_11.png)
+3. 接着选择我们要监控的项目所使用的语言或框架。
+4. 填写相关信息，获得 LICENSE_KEY
 
-2. 现在来到 New Relic 管理界面，在里面创建一个文件并写入一些内容，保存后重新访问我们的应用。
-
-  ![](image_12.png)
-
-  访问结果如下
-
-  ![](image_13.png)
-
-  很明显，应用成功读取到了我们建立的文件，我们回到 New Relic 的管理界面，刷新一下浏览器，发现在当前目录下的确产生了一个 ip.log 的日志文件。这说明
-
-  + 我们可以通过 New Relic 来修改我们的应用，而不必每一次修改后都要重新构建代码，更新应用了。
-  + 我们可以把应用产生的日志或者数据放到 New Relic 下，方便我们查看
 
 #### 至此，我们已经掌握了如何创建和使用 DaoCloud 平台之上的 New Relic 服务。
