@@ -6,27 +6,27 @@
 
 1. 登录 DaoCloud 控制台，选择「服务集成」。
 
-  ![](image_1.png)
+  ![](0.png)
 
 2. 在「SaaS 服务」里选择 New Relic 服务。
 
-  ![](image_2.png)
+  ![](2.png)
 
 3. 点击 「创建服务实例」。
 
-  ![](image_3.png)
+  ![](3.png)
 
 4. 输入服务实例名称，输入 APP_NAME 和您在 New Relc 获取的 LICENSE_KEY，点击「创建」按钮创建 New Relic 服务实例
 
-  ![](image_4.png)
+  ![](4.png)
 
 5. 创建完成，可以看到 New Relic 服务的相关信息，比如 New Relic 使用的 APP_NAME 和 LICENSE_KEY。
 
-  ![](image_5.png)
+  ![](5.png)
 
 6. 在「我的服务」里查看已创建的 New Relic 服务
 
-  ![](image_6.png)
+  ![](6.png)
 
 ## New Relic 与我的应用绑定
 
@@ -34,20 +34,61 @@
 
   > 您可以在创建应用时绑定 New Relic，也可以把 New Relic 绑定在现有的应用上。
 
-  ![](image_9.png)
+  ![](7.png)
 
 2. 当您选择了要绑定的 New Relic 服务以后，下面会显示出所选 New Relic 的相关信息。
 
-  ![](image_10.png)
+  ![](8.png)
 
 ## 如何使用 New Relic
 我们将在用一个例子来演示在 DaoCloud 上怎么使用 New Relc 服务，具体步骤如下：
 
-1. 在 [New Relic]() 官网注册您的 New Relic 账号。
+1. 在 [New Relic](https://newrelic.com/) 官网注册我们的 New Relic 账号。
+
+  ![](1.png)
+
 2. 登录 New Relic,选择 RPM 服务。
 
-3. 接着选择我们要监控的项目所使用的语言或框架。
-4. 填写相关信息，获得 LICENSE_KEY
+  ![](9.png)
 
+3. 接着选择我们要监控的项目所使用的语言或框架。这里我们选择 Ruby。
+
+  ![](10.png)
+
+4. 接下来我们会获得 LICENSE KEY，然后根据提示给我们的项目加上 New Relic 监控插件。
+
+  ![](11.png)
+
+5. 下载 newrelic.yml 到我们项目的 config 文件夹下，修改相关变量并重启应用。
+```ruby
+common: &default_settings
+  # Required license key associated with your New Relic account.
+  license_key: <%= ENV['NR_LICENSE_KEY'] %>
+
+  # Your application name. Renaming here affects where data displays in New
+  # Relic.  For more details, see https://docs.newrelic.com/docs/apm/new-relic-apm/maintenance/renaming-applications
+
+  app_name: <%= ENV['NR_APP_NAME'] %>
+
+  # To disable the agent regardless of other settings, uncomment the following:
+  # agent_enabled: false
+
+  # Logging level for log/newrelic_agent.log
+  log_level: info
+
+  # Environment-specific settings are in this section.
+  # RAILS_ENV or RACK_ENV (as appropriate) is used to determine the environment.
+  # If your application has other named environments, configure them here.
+  development:
+    <<: *default_settings
+    app_name: <%= ENV['NR_APP_NAME'] %>
+
+    # NOTE: There is substantial overhead when running in developer mode.
+    # Do not use for production or load testing.
+    developer_mode: true
+```
+6. 等待几分钟后，在 New Relic 上创建 Dashboard，选择要展示的信息，就可以看到我们项目的监控信息了。
+
+  ![](14.png)
 
 #### 至此，我们已经掌握了如何创建和使用 DaoCloud 平台之上的 New Relic 服务。
