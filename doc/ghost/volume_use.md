@@ -13,7 +13,7 @@ Volume 控制台为我们提供了很多关于 Volume 操作的功能，在 Volu
 接下来我们用一个实例来介绍 Volume 的应用，这个实例将在 DaoCloud 上建立一个用 Ghost 搭建的博客，然后我们用 Volume 来存放博客上传的图片，主题和配置文件，使应用的数据不因为容器状态的变化而丢失。您可以按照以下步骤搭建一个相同的应用。
 > 相关代码我们存放在 [GitHub](https://github.com/yxwzaxns/ghost.git) 上，您可以下载并使用
 
-1. 在 [GitHub](https://github.com/yxwzaxns/ghost.git) 上拉取代码在 DaoCloud 构建 Ghost 镜像。在 Dokerfile 文件里，您需要注意其中的 **ENV GHOST_CONTENT /var/ghost** 它是 Ghost 存放上传图片，主题，数据库的目录，我们的目的是持久化这个目录，所以要把这个目录与我们将要用到的 Volume 绑定在一起。
+1. 在 [GitHub](https://github.com/yxwzaxns/ghost.git) 上拉取代码在 DaoCloud 构建 Ghost 镜像。在 Dokerfile 文件里，您需要注意其中的 **`ENV GHOST_CONTENT /var/ghost`** 它是 Ghost 存放上传图片，主题，数据库的目录，我们的目的是持久化这个目录，所以要把这个目录与我们将要用到的 Volume 绑定在一起。
 
   ```
   ENV GHOST_CONTENT /var/ghost

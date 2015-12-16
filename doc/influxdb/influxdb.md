@@ -1,106 +1,104 @@
-## 什么是 InfluxDB
-##### InfluxDB是一个易用性和扩展性非常好的数据库系统，它非常适合适用于性能数据存储，事件以及实时分析等场景。它内置基于HTTP的API接口，为数据存储和查询提供了极大的便利。
-
-## 在 DaoCloud 服务集成创建 InfluxDB 服务。
-
+#### 什么是 InfluxDB
+InfluxDB是一个易用性和扩展性非常好的数据库系统，它非常适合适用于性能数据存储，事件以及实时分析等场景。它内置基于HTTP的API接口，为数据存储和查询提供了极大的便利。
+#### 在 DaoCloud 服务集成创建 InfluxDB 服务。
 1. 登录 DaoCloud 控制台，选择「服务集成」。
 
-  ![](./images/image_1.png)
+  ![](1.png)
 
 2. 在「Dao服务」里选择 InfluxDB 服务。
 
-  ![](./images/image_2.png)
+  ![](2.png)
 
 3. 点击 「创建服务实例」。
 
-  ![](./images/image_3.png)
+  ![](3.png)
 
 4. 输入服务实例名称，点击「创建」按钮
 
-  ![](./images/image_4.png)
+  ![](4.png)
 
 5. 创建完成，可以看到 InfluxDB 服务的相关参数。
 
-  ![](./images/image_5.png)
+  ![](5.png)
 
 6. 查看我已创建的服务
 
-  ![](./images/image_6.png)
+  ![](6.png)
 
-## InfluxDB 与我的应用绑定
-
+#### InfluxDB 与我的应用绑定
 1. 选择需要绑定 InfluxDB 服务的应用，在「应用配置」下的「服务绑定」里选择刚刚创建好的 InfluxDB 服务。
 
   > 您可以在创建应用时绑定 InfluxDB 服务，也可以把 InfluxDB 服务绑定在现有的应用上
 
-  ![](./images/image_7.png)
+  ![](7.png)
 
 2. 当您选择了要绑定的 InfluxDB 服务以后，会发现下面出现了关于连接 InfluxDB 所需要的信息，在您选择保存更改以后，这些信息会写入到您绑定应用的环境变量里，这样您就可以在代码里通过读取相关环境变量来使用 InfluxDB 服务。
 
-  ![](./images/image_8.png)
+  ![](8.png)
 
-2. 如何读取环境变量和使用 InfluxDB，下面我们展示一段使用 Ruby 语言来操作 InfluxDB 的具体代码（完整的 Docker 镜像请前往 [GitHub](https://github.com/yxwzaxns/DaoCloud_InfluxDB.git) ，您可以 fork 到自己的项目里运行这个例子）
+2. 如何读取环境变量和使用 InfluxDB，下面我们使用 Python 语言来操作 InfluxDB，关键代码如下：
 
-```Ruby
-require 'sinatra'
-require 'net/http'
-require 'erb'
-require 'json'
+ > 完整的 Docker 镜像请前往 [GitHub](https://github.com/DaoCloud/influxdb_sample.git) ，您可以 fork 到自己的项目里运行这个例子
 
-module Sinatra
-  class Base
-    set :server, %w[thin mongrel webrick]
-    set :bind, '0.0.0.0'
-    set :port, 8080
-    set :views, File.dirname('.') + '/views'
-  end
-end
+  ```Python
+  #!/usr/bin/python
+  import json
+  import math
+  import requests
+  import sys
+  import os
 
-host={ENV['INFLUXDB_PORT_3306_TCP_ADDR']}
-username:#{ENV['INFLUXDB_USERNAME']}
-password:#{ENV['INFLUXDB_PASSWORD']}
-port:#{ENV['INFLUXDB_PORT_3306_TCP_PORT']}
-database:#{ENV['INFLUXDB_INSTANCE_NAME']}
+  from time import sleep
 
-$create_database_uri="http://#{host}:#{port}/query?u=#{username}&p=#{password}&q=create database #{database}"
-$query_uri="http://#{host}:#{port}/query?u=#{username}&p=#{password}&db=#{database}&q=select * from sin"
-$write_uri="http://#{host}:#{port}/write?u=#{username}&p=#{password}&db=#{database}"
+  # Read the environment value
+  host = os.getenv('INFLUXDB_PORT_8086_TCP_ADDR')
+  if host is None:
+      host = "localhost"
 
-get '/' do
-  n=0
-  Net::HTTP.get(URI($create_database_uri))
-  Array(1..90).each do |e|
-      Net::HTTP.start(URI($write_uri).host,URI($write_uri).port) do |http|
-        http.request_post($write_uri,"sin,val=#{e} value=#{Math.sin(Math::PI/180*e)}")
-        n+=1
-      end
-  end
-  erb :index,:locals => {:n => n}
-end
+  port = os.getenv('INFLUXDB_PORT_8086_TCP_PORT')
+  if port is None:
+      port = '8086'
 
-get '/info' do
-  res=JSON.parse(Net::HTTP.get(URI($query_uri)))
-  erb :info,:locals => {:info => res}
-end
+  user = os.getenv('INFLUXDB_USERNAME')
+  if user is None:
+      user = 'root'
 
-```
+  password = os.getenv('INFLUXDB_PASSWORD')
+  if password is None:
+      password = 'root'
 
-  成功部署后访问应用，便可以看到连接 InfluxDB 所需要的相关信息已经被成功读取出来,并且您可以参考上面的代码往 InfluxDB 里写入数据，例如：
-    http://your_app_url_path/get/name
+  STATUS_MOD = 100
+  n = 0
 
-    ![](./images/image_9.png)
+  # Firstly use the credentials to create an influxdb database.
+  # We take name db1 as an instance.
+  db = 'db1'
 
-## 管理 InfluxDB 服务
-1. Mongo Express 是使用 Node.js 和 Express 框架实现的轻量级 InfluxDB 数据库管理程序，通过它您可以轻松管理您的 InfluxDB 数据库。
- 这里我们使用 DaoCloud 提供的 Mongo Express 镜像来创建一个 Mongo Express 应用，用它来管理我们的 InfluxDB 服务。
-  + 进入 DaoCloud 镜像仓库，选择 「DaoCloud镜像」下的 Mongo Express 镜像，点击「部署最新版本」。
+  url = 'http://%s:%s/db?u=%s&p=%s'%(host, port, user, password)
+  data = {'name': db }
 
-  ![](./images/image_10.png)
+  # Start to create influxdb database
+  r = requests.post( url, data=json.dumps(data))
 
-  + 输入应用名称，选择运行环境，点击「基础设置」，进入下一步。
+  # Start to to generate points and draw them into influxdb
+  while True:
+      for d in range(0, 360):
+          v = [{'name': 'sin', 'columns': ['val'], 'points': [[math.sin(math.radians(d))]]}]
+          url = 'http://%s:%s/db/%s/series?u=%s&p=%s'%(host,port,db,user,password)
+          r = requests.post(url, data=json.dumps(v))
+          if r.status_code != 200:
+              print 'Failed to add point to influxdb -- aborting.'
+              sys.exit(1)
+          n += 1
 
-  + 绑定要使用的 InfluxDB 服务，点击「立即部署」，应用启动成功后就可以进入 Mongo Express 执行常规的 InfluxDB 服务管理操作了。（注意：目前在 DaoCloud 镜像仓库提供的 Mongo Express 版本不支持授权认证，您启动 Mongo Express 容器后，容器的 URL 是公开访问的。所以在您使用完毕后请立即「停止」容器，防止 InfluxDB 数据库被他人操作。）
+          sleep(0.01)
 
-  ![](./images/image_11.png)
+          if n % STATUS_MOD == 0:
+              print '%d points inserted.' % n
+  ```
+
+  应用成功部署后，在日志一栏便可以看到数据正在写入 InfluxDB。
+
+    ![](9.png)
 
 #### 至此，我们已经掌握了如何创建和使用 DaoCloud 平台之上的 InfluxDB 服务。
